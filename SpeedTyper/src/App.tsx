@@ -33,20 +33,12 @@ function App() {
     "ladder", "mosaic", "needle", "oxygen", "parrot",
     "riddle", "spider", "trumpet", "velvet", "window"
 ];
-  const calculateWpm = () => {
-// Calculate time used in minutes
-const currentTime = timer && timer.active ? Date.now() : (timer ? timer.startTime + (60 * 1000) : 0);
-const timeUsedInMs = timer ? currentTime - timer.startTime : 0;
-const timeUsedInMinutes = timeUsedInMs / 1000 / 60; // Convert ms to minutes
+const calculateWpm = () => {
+  const minutes = ((timer!.startTime) - (timer!.time)) / 60;
 
-// WPM = (words typed / time in minutes)
-const calculatedWpm = timeUsedInMinutes > 0 
-  ? Math.round(wordCount / timeUsedInMinutes) 
-  : 0;
-
-  setWpm(calculatedWpm);
-    console.log(wpm);
-  }
+      setWpm(Math.round(score / minutes));
+  
+};
 
   const resetAll = () =>{
     setScore(0);
@@ -61,7 +53,7 @@ const calculatedWpm = timeUsedInMinutes > 0
       }
     });
   };
-
+  
   useEffect(() => {
     if (!timer) {
       setTimer(new Timer()); // Initialize the timer only once
@@ -69,12 +61,17 @@ const calculatedWpm = timeUsedInMinutes > 0
   }, [timer, time]);
 
   useEffect(() => {
+    if(timer?.time){
+    calculateWpm();
+  }
+  },[time]);  
+
+  useEffect(() => {
     if (timer) {
       const interval = setInterval(() => {
         setTime(timer.time);
-        if (timer.active) calculateWpm();
       }, 100);
-      calculateWpm();
+      
       return () => clearInterval(interval);
     }
  
@@ -93,13 +90,18 @@ const calculatedWpm = timeUsedInMinutes > 0
         element?.style.setProperty('color', 'red');
       }
     }
+    if (wordCount === text.length - 1) {
+      timer?.stopTimer();
+      calculateWpm();
+    }
   }
   const handleChange = (event:  React.ChangeEvent<HTMLInputElement> ) => {
-    if (timer?.active === false && time > 0) {
+    //this causes a bug if the user can complete the entire text in less than 1 secound. the timer automaticcally starts if the timer is inactive and time===60
+    if (!timer?.active && time === timer?.startTime) {
       timer?.startTimer();
     }
     setInput(event.target.value.trim());
-    
+    if (timer?.active) calculateWpm();
     console.log(input);
   }
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -115,7 +117,8 @@ const calculatedWpm = timeUsedInMinutes > 0
     return (
       <>
         <div>
-          <div><p>{time}</p></div>
+          <div><h1>{time}</h1></div>
+          <br />
           <div className='flex flex-wrap max-w-2xl mx-auto'>
             {text.map((word, index)=> {
           
@@ -128,6 +131,7 @@ const calculatedWpm = timeUsedInMinutes > 0
               </p>;
             })}
           </div>
+          <br />
           <input 
             className='box-border border-1 p-1'
             ref={inputRef}
@@ -138,6 +142,7 @@ const calculatedWpm = timeUsedInMinutes > 0
             />
             
         </div>
+        <br />
         <button
           onClick={() => {resetAll()} }
           >

@@ -1,5 +1,5 @@
 class Timer{
-    startTime: number = 20;
+    startTime: number = 60;
 
     time: number = this.startTime;
     active: boolean = false;
@@ -10,18 +10,22 @@ class Timer{
         this.active = true;
         this.time = this.startTime;
         const interval = setInterval(()=>{
-            if (!this.active){
-                clearInterval(interval);
-                return 
+            if (this.active){
+                this.time--;
             }
-            this.time--;
-            if(this.time === 0){
+         
+            if(this.time === 0  || !this.active){
                 this.active = false
                 clearInterval(interval);
+                return 
+
             }
             
             console.log(this.time);
         }, 1000);
+    }
+    stopTimer(){
+        this.active = false;
     }
     reset(){
         this.active = false;
