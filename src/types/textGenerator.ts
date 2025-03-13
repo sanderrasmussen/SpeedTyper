@@ -40,7 +40,7 @@ class TextGenerator{
             quote: json.quote,
             author: json.author,
           };
-          const newText = json.quote.split(" ");
+          const newText = quoteData.quote.split(" ");
           this.text = this.text.concat(newText);
           
           console.log(json);
