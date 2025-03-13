@@ -13,7 +13,7 @@ function App() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [time, setTime] = useState<number>(60);
   const [wpm, setWpm] = useState<number>(0);
-  const [textGenerator, setTextGenerator] = useState<TextGenerator>(new TextGenerator);
+  const [textGenerator] = useState<TextGenerator>(new TextGenerator);
   const [text, setText] = useState<string[]>(textGenerator.text);
   
 const calculateWpm = () => {
