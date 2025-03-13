@@ -2,7 +2,29 @@ import React, { useEffect } from 'react'
 import { useState, useRef } from 'react';
 import './App.css'
 import Timer from './types/timer';
+import TextGenerator from './types/textGenerator';
 
+const BACKUP_TEXT = [
+  "apple", "banana", "cherry", "dragon", "elephant",
+  "forest", "guitar", "hammer", "island", "jungle",
+  "kitten", "lemon", "mountain", "notebook", "ocean",
+  "pencil", "quartz", "river", "shadow", "tiger",
+  "umbrella", "violet", "whisper", "xylophone", "yellow",
+  "zebra", "bridge", "castle", "desert", "emerald",
+  "fountain", "glacier", "horizon", "ivory", "jasmin",
+  "kingdom", "lantern", "meadow", "nest", "orchid",
+  "prairie", "quilt", "rainbow", "stream", "thunder",
+  "valley", "willow", "xenon", "yogurt", "zephyr",
+  "anchor", "beacon", "canyon", "dolphin", "eagle",
+  "falcon", "garden", "harbor", "igloo", "jacket",
+  "koala", "lizard", "magnet", "noodle", "oasis",
+  "pebble", "quest", "rocket", "saddle", "tunnel",
+  "vortex", "wagon", "xerox", "yarn", "zipper",
+  "boulder", "cricket", "daisy", "engine", "feather",
+  "giraffe", "hollow", "insect", "jewel", "kettle",
+  "ladder", "mosaic", "needle", "oxygen", "parrot",
+  "riddle", "spider", "trumpet", "velvet", "window"
+];
 function App() {
   const [input, setInput] = useState<string>('');
   const [score, setScore] = useState<number>(0);
@@ -11,36 +33,18 @@ function App() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [time, setTime] = useState<number>(60);
   const [wpm, setWpm] = useState<number>(0);
-
-  const text: string[] = [
-    "apple", "banana", "cherry", "dragon", "elephant",
-    "forest", "guitar", "hammer", "island", "jungle",
-    "kitten", "lemon", "mountain", "notebook", "ocean",
-    "pencil", "quartz", "river", "shadow", "tiger",
-    "umbrella", "violet", "whisper", "xylophone", "yellow",
-    "zebra", "bridge", "castle", "desert", "emerald",
-    "fountain", "glacier", "horizon", "ivory", "jasmin",
-    "kingdom", "lantern", "meadow", "nest", "orchid",
-    "prairie", "quilt", "rainbow", "stream", "thunder",
-    "valley", "willow", "xenon", "yogurt", "zephyr",
-    "anchor", "beacon", "canyon", "dolphin", "eagle",
-    "falcon", "garden", "harbor", "igloo", "jacket",
-    "koala", "lizard", "magnet", "noodle", "oasis",
-    "pebble", "quest", "rocket", "saddle", "tunnel",
-    "vortex", "wagon", "xerox", "yarn", "zipper",
-    "boulder", "cricket", "daisy", "engine", "feather",
-    "giraffe", "hollow", "insect", "jewel", "kettle",
-    "ladder", "mosaic", "needle", "oxygen", "parrot",
-    "riddle", "spider", "trumpet", "velvet", "window"
-];
+  const [textGenerator, setTextGenerator] = useState<TextGenerator>(new TextGenerator);
+  const [text, setText] = useState<string[]>(BACKUP_TEXT);
+  
 const calculateWpm = () => {
   const minutes = ((timer!.startTime) - (timer!.time)) / 60;
-
       setWpm(Math.round(score / minutes));
   
 };
 
   const resetAll = () =>{
+    textGenerator.makeText();
+    setText(textGenerator.text.split(" "));
     setScore(0);
     setWordCount(0);
     setInput('');
@@ -53,12 +57,12 @@ const calculateWpm = () => {
       }
     });
   };
-  
+
   useEffect(() => {
     if (!timer) {
       setTimer(new Timer()); // Initialize the timer only once
     }
-  }, [timer, time]);
+  }, [timer]);
 
   useEffect(() => {
     if(timer?.time){
@@ -76,6 +80,8 @@ const calculateWpm = () => {
     }
  
   }, [timer]);
+
+
 
   const compareInput = (input: string, word: string) => {
     const element = document.getElementById(`${word}-${wordCount}`);
