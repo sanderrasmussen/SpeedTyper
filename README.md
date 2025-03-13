@@ -1,54 +1,18 @@
-# React + TypeScript + Vite
+# SpeedTyper Component
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The `SpeedTyper` component is a typing speed test game that tracks your typing speed in words per minute (WPM). The component allows users to type words displayed on the screen, with the time countdown and WPM calculation.
 
-Currently, two official plugins are available:
+**URL**: [sanderrasmussen.com/SpeedTyper](https://sanderrasmussen.com/SpeedTyper)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Timer**: A countdown timer starts when the user begins typing and stops when the time runs out or the user finishes typing all words.
+- **Word Count**: Tracks the number of correctly typed words.
+- **WPM Calculation**: Words per minute (WPM) is calculated based on the number of correctly typed words and the time taken.
+- **Input Field**: The user types words in an input field. If the typed word matches the target word, it turns green; otherwise, it turns red.
+- **Restart Button**: Resets the game, the timer, and the word count.
+  
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
