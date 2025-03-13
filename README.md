@@ -1,6 +1,6 @@
 # SpeedTyper Component
 
-The `SpeedTyper` component is a typing speed test game that tracks your typing speed in words per minute (WPM) based on a random sequence of words. The component allows users to type words displayed on the screen, with the time countdown and WPM calculation.
+The `SpeedTyper` component is a typing speed test game that tracks your typing speed in words per minute (WPM). The component allows users to type words displayed on the screen, with the time countdown and WPM calculation.
 
 **URL**: [sanderrasmussen.com/SpeedTyper](https://sanderrasmussen.com/SpeedTyper)
 
@@ -16,13 +16,3 @@ The `SpeedTyper` component is a typing speed test game that tracks your typing s
   
 ---
 
-## File Structure
-
-```plaintext
-src/
-  components/
-    SpeedTyper.js          # Main component for SpeedTyper game logic and UI
-  types/
-    timer.js               # Timer class to manage the countdown and time logic
-  styles/
-    SpeedTyper.css         # Custom CSS styles for the SpeedTyper component
